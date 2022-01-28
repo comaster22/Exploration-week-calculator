@@ -1,0 +1,49 @@
+import math
+from tkinter import *
+from operator import pow, truediv, mul, add, sub
+
+
+root = Tk()
+
+root.geometry("500x400")
+
+e0 = Entry(root, width=60, bd=5)
+number = e0.get()
+e0.pack()
+
+operators = {
+  '+': add,
+  '-': sub,
+  '*': mul,
+  '/': truediv,
+  '^': pow
+}
+
+
+def calculate(s):
+    if s.isdigit():
+        return float(s)
+    for c in operators.keys():
+        left, operator, right = s.partition(c)
+        if operator in operators:
+            return operators[operator](calculate(left), calculate(right))
+
+
+def show():
+    global myLabel
+    answer = str(calculate(e0.get()))
+    print("answer is " + answer)
+    print("equation is " + e0.get())
+    myLabel = Label(root, text=answer)
+    myLabel.pack()
+
+
+Answer = Button(root, text="Answer", command=lambda: [calculate(e0.get()), show()])
+Answer.pack()
+
+
+print("Answer: " + str(calculate(number)))
+print(number)
+
+
+root.mainloop()
