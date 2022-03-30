@@ -1,7 +1,8 @@
 import math
 from tkinter import *
 from operator import pow, truediv, mul, add, sub
-
+import os
+import sys
 
 root = Tk()
 
@@ -46,4 +47,208 @@ print("Answer: " + str(calculate(number)))
 print(number)
 
 
+e = Entry(root, bd=5, width=50)
+e.pack()
+e.insert(0, "Enter your first number")
+
+e2 = Entry(root, bd=5, width=50)
+e2.pack()
+e2.insert(0, "Enter your operation (+   -   *   /  triangle) ")
+
+e3 = Entry(root, bd=5, width=50)
+e3.pack()
+e3.insert(0, "Enter your second number")
+
+e4 = Entry(root, bd=5, width=50)
+e4.insert(0, "Click the third number button if you need me")
+e4.config(state='disabled')
+e4.pack()
+
+e5 = Entry(bd=5, width=12)
+e5.pack()
+e5.place(x=41, y=220)
+e5.insert(0, "Number Detail")
+
+
+Button_number_detail = Button(root, text="define", command=lambda: [number_detail(), number_defined()])
+Button_number_detail.pack()
+Button_number_detail.place(x=41, y=260)
+
+
+def number_detail():
+    global squared
+    global cubed
+    global square_root
+    nd = float(e5.get())
+    squared = "squared value is: ", float(nd ** 2)
+    cubed = "cubed value is: ", float(nd ** 3)
+    square_root = "square root is", float(math.sqrt(nd))
+
+
+def number_defined():
+    global myLabel
+    myLabel = Label(root, text=squared)
+    myLabel.pack()
+    print(cubed)
+    myLabel = Label(root, text=cubed)
+    myLabel.pack()
+    print(square_root)
+    myLabel = Label(root, text=square_root)
+    myLabel.pack()
+
+
+#def upgrade():
+    #if Button_advanced['text'] == 'Advanced':
+        #Button_advanced['text'] = 'Original'
+    #else:
+        #Button_advanced['text'] = 'Advanced'
+
+
+#Button_advanced = Button(root, text="Advanced", command=upgrade)
+#Button_advanced.pack()
+#Button_advanced.place(x=310, y=34)
+
+
+def button_third():
+    e4.configure(state='normal')
+    if Button_third['text'] == 'third number?':
+        e4.configure(state='normal')
+        Button_third['text'] = 'No third number?'
+    else:
+        Button_third['text'] = 'third number?'
+        e4.delete(0, END)
+        e4.insert(0, "Click third number button if you need me")
+        e4.config(state='disabled')
+
+
+Button_third = Button(root, text="third number?", command=button_third)
+Button_third.pack()
+
+
+'''def delete():
+    myLabel.pack_forget()
+    print(myButton.winfo_exists())
+
+
+Button_delete = Button(root, text="Delete Answers", command=delete)
+Button_delete.pack()
+Button_delete.place(x=350, y=195)
+'''
+
+
+def myClick():
+    global myLabel
+    global math
+    first_number = e.get()
+    math = e2.get()
+    second_number = e3.get()
+    global f_num
+    third_number = e4.get()
+    f_num = float(first_number)
+    if math == "+":
+        solution = "addition"
+        math = f_num + float(second_number)
+        myLabel = Label(root, text=math)
+        myLabel.pack()
+    elif math == "-":
+        solution = "subtraction"
+        math = f_num - float(second_number)
+        myLabel = Label(root, text=math)
+        myLabel.pack()
+    elif math == "*":
+        solution = "multiplication"
+        math = f_num * float(second_number)
+        myLabel = Label(root, text=math)
+        myLabel.pack()
+    elif math == "/":
+        solution = "division"
+        math = f_num / float(second_number)
+        myLabel = Label(root, text=math)
+        myLabel.pack()
+    elif math == "%":
+        num3 = f_num / float(second_number)
+        ans = float(num3 * 100)
+        math = "first number", float(f_num), "is", float(ans), "% of", float(second_number)
+        myLabel = Label(root, text=math)
+        myLabel.pack()
+    elif math == "triangle":
+        ans = f_num * float(second_number)
+        ans2 = float(ans/2)
+        math = "area is", ans2
+        a = f_num ** 2 + float(second_number)**2
+        pythagorean_theorem = float(a**0.5)
+        math1 = "for pythagorean theorem", pythagorean_theorem
+        myLabel1 = Label(root, text=math1)
+        myLabel1.pack()
+        myLabel = Label(root, text=math)
+        myLabel.pack()
+
+
+myButton = Button(root, text="Click Me!", command=myClick)
+myButton.pack()
+
+
+def restart_program():
+    """Restarts the current program.
+    Note: this function does not return. Any cleanup action (like
+    saving data) must be done before calling this function."""
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
+
+
+Button_reset = Button(root, text="Delete all", command=restart_program)
+Button_reset.pack()
+Button_reset.place(x=390, y=225)
+
+
+def button_clear():
+    e0.delete(0, END)
+    e.delete(0, END)
+    e2.delete(0, END)
+    e3.delete(0, END)
+    e4.delete(0, END)
+    e5.delete(0, END)
+    e.insert(0, "Enter your first number")
+    e2.insert(0, "Enter your operation (+   -   *   /  triangle)")
+    e3.insert(0, "Enter your second number")
+    e4.insert(0, "Click the third number button if you need me")
+    e4.config(state='disabled')
+    e5.insert(0, "Number details")
+
+
+Button_clear = Button(root, text="Clear", command=button_clear)
+Button_clear.pack()
+Button_clear.place(x=45, y=195)
+
+
+def button_explain():
+    myLabel = Label(root, text="+   -   *   /  ")
+    myLabel.pack()
+
+
+Button_explain = Button(root, text="operations", command=button_explain)
+Button_explain.pack()
+
+
+def click_polygon():
+    if Button_polygons['text'] == 'polygons':
+        Button_polygons['text'] = 'numbers'
+    else:
+        Button_polygons['text'] = 'polygons'
+
+
+Button_polygons = Button(root, text="polygons", command=click_polygon)
+Button_polygons.pack()
+Button_polygons.place(x=90, y=195)
+
+
+def end():
+    root.destroy()
+
+
+Button_end = Button(root, text="End", command=end)
+Button_end.pack()
+Button_end.place(x=350, y=225)
+
+root.resizable(False, False)
 root.mainloop()
